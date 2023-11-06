@@ -23,4 +23,18 @@ Deliverable #3
         Forrest Pritt
         Nina Rubanovich
 # How to Use/Run the Parser
-*** To be filled in later ***
+Install Python3 (https://www.python.org/downloads/)
+
+Create a local folder and download PythonParser.g4 and Driver.py
+
+Download the ANTLR complete JAR file from the ANTLR website (https://www.antlr.org/download/antlr-4.13.1-complete.jar) and store in your local folder
+
+Create a Python virtual environment in your local folder by running "python3 -m venv ./venv" in a bash terminal
+
+Activate your virtual environment by running "source /venv/bin/activate"
+
+Install ANTLR by running "pip install antlr4-tools" and "pip install antlr4-python3-runtime"
+
+Run the Driver.py file to test your Python file by running "Python3 Driver.py (name of your .py file to parse)"
+
+Observe the Parse trees that are created by ANTLR for your Python expressions
