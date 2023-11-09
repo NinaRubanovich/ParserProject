@@ -35,6 +35,6 @@ Activate your virtual environment by running "source /venv/bin/activate"
 
 Install ANTLR by running "pip install antlr4-tools" and "pip install antlr4-python3-runtime"
 
-Run the Driver.py file to test your Python file by running "python driver.py <name of your .py file to parse>" OR "python3 Driver.py <name of your .py file to parse>" depending on your Python version
+Run the driver.py file to test your Python file by running "python driver.py <name of your .py file to parse>" OR "python3 Driver.py <name of your .py file to parse>" depending on your Python version
 
 Observe the Parse trees that are created by ANTLR for your Python expressions
