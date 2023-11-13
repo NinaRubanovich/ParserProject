@@ -6,7 +6,21 @@ start: statement+ EOF;
 //Look for different statements
 statement: assign_statement
    | arith_statement
-   | array_statement;
+   | array_statement
+   | if_statement;
+
+// If-Elif-Else Statements
+if_statement: 'if' condition ':' (statement)+ ('elif' condition ':' (statement+)+)* ('else' ':' (statement)+)?;
+
+// Condition
+condition: condition_expr (('and'|'or') condition_expr)?;
+
+condition_expr: ('(')? 'not' ID (')')?
+                | ID comp_op ID
+                | ID comp_op NUMBER
+                ;
+
+comp_op: '==' | '!=' | '<' | '<=' | '>' | '>=';
 
 //= += -= *= /=
 assign_statement: ID assign_op expr;
