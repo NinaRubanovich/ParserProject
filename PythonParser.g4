@@ -18,16 +18,15 @@ WS: [ \t]+ -> skip;
 NEWLINE: '\r'? '\n' -> skip;
 
 // Start of Parser
-start: statement+ EOF;
+start: statement+ if_statement+ EOF;
 
 // Look for different statements
 statement: assign_statement
    | arith_statement
-   | array_statement
-   | if_statement;
+   | array_statement;
 
 // If-Elif-Else Statements
-if_statement: 'if' condition ':' INDENT? (statement WS*)+ DEDENT? ('elif' condition ':'  INDENT? (statement WS*)+)* DEDENT? ('else' ':' INDENT? (statement WS*)+ DEDENT?)?;
+if_statement: 'if' condition ':' (statement)+ DEDENT? ('elif' condition ':'  (statement)+)* DEDENT? ('else' ':' (statement)+)? DEDENT?;
 
 // Condition
 condition: condition_expr (('and'|'or') condition_expr)?;
@@ -65,5 +64,4 @@ arith_expr: arith_expr ('*' | '/') arith_expr
 expr: arith_expr
    | BOOL
    | STRING
-   | array_statement
-   | BOOL;
+   | array_statement;
