@@ -1,16 +1,33 @@
 grammar PythonParser;
 
-//Start of Parser
+// Lexer Rules
+tokens {
+   INDENT, DEDENT
+}
+
+// General Tokens
+ID: [a-zA-Z_][a-zA-Z_0-9]*;
+NUMBER: INT | FLOAT;
+INT: '-'?[0-9]+;
+FLOAT: '-'?[0-9]+'.'[0-9]+;
+STRING: '"' .*? '"' | '\'' .*? '\'';
+BOOL: 'True' | 'False';
+
+// Whitespace, tabs, newlines
+WS: [ \t]+ -> skip;
+NEWLINE: '\r'? '\n' -> skip;
+
+// Start of Parser
 start: statement+ EOF;
 
-//Look for different statements
+// Look for different statements
 statement: assign_statement
    | arith_statement
    | array_statement
    | if_statement;
 
 // If-Elif-Else Statements
-if_statement: 'if' condition ':' (statement)+ ('elif' condition ':' (statement+)+)* ('else' ':' (statement)+)?;
+if_statement: 'if' condition ':' INDENT? (statement WS*)+ DEDENT? ('elif' condition ':'  INDENT? (statement WS*)+)* DEDENT? ('else' ':' INDENT? (statement WS*)+ DEDENT?)?;
 
 // Condition
 condition: condition_expr (('and'|'or') condition_expr)?;
@@ -50,14 +67,3 @@ expr: arith_expr
    | STRING
    | array_statement
    | BOOL;
-
-//General Tokens
-ID: [a-zA-Z_][a-zA-Z_0-9]*;
-NUMBER: INT | FLOAT;
-INT: [0-9]+;
-FLOAT: [0-9]+'.'[0-9]+;
-STRING: '"' .*? '"' | '\'' .*? '\'';
-BOOL: 'True' | 'False';
-
-//Whitespace, tabs, newlines
-WS: [ \t\r\n]+ -> skip;
