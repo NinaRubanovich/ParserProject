@@ -15,24 +15,19 @@ BOOL: 'True' | 'False';
 
 // Whitespace, tabs, newlines
 WS: [ \t]+ -> skip;
-NEWLINE: [\r? \n]+ -> skip;
-NEWLINE_TAB: '\t'* NEWLINE -> skip;
+NEWLINE: '\r'? '\n' -> skip;
 
 // Start of Parser
-// TODO: Change if_statement to comp_statement
-start: (statement | if_statement)* EOF;
+start: statement+ if_statement+ statement+ EOF;
 
 // Look for different statements
 statement: assign_statement
    | arith_statement
-   | array_statement;
-
-// TODO: Add compound statements that looks for if/while/for
+   | array_statement
+   | if_statement;
 
 // If-Elif-Else Statements
-if_statement: 'if' condition ':' nest_state+ ('elif' condition ':'  nest_state+)* ('else' ':' nest_state+)*;
-
-nest_state: '\t' statement NEWLINE_TAB*;
+if_statement: 'if' condition ':'  (statement+) ('elif' condition ':' (statement)+)* ('else' ':' (statement)+)?;
 
 // Condition
 condition: condition_expr (('and'|'or') condition_expr)?;
@@ -70,4 +65,5 @@ arith_expr: arith_expr ('*' | '/') arith_expr
 expr: arith_expr
    | BOOL
    | STRING
-   | array_statement;
+   | array_statement
+   | BOOL;
