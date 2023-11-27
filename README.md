@@ -16,6 +16,11 @@ Deliverable #3
        -while and for loops
        -Nested structures
        -Support for comments
+
+Documentation
+      
+       -Report (Writing README.md on your GitHub repo., see “GitHub Repository Page section”)
+       
 # Team Members
 
         Allison Drainer
