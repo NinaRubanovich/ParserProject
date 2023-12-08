@@ -19,7 +19,7 @@ MULTI_LINE_COMMENT: '\'\'\'' .*? '\'\'\'' -> skip;
 // Whitespace, tabs, newlines
 WS: [ \t]+ -> skip;
 NEWLINE: '\r'? '\n' -> skip;
-//NEWLINE_TAB: '\t'* NEWLINE -> skip;
+NEWLINE_TAB: '\t'* NEWLINE -> skip;
 
 // Start of Parser
 start: (statement | comp_statement)* EOF;
@@ -38,7 +38,7 @@ comp_statement: if_statement
 // If-Elif-Else Statements
 if_statement: 'if' condition ':' nest_state+ ('elif' condition ':'  nest_state+)* ('else' ':' nest_state+)*;
 
-nest_state: '\t'+ (statement | comp_statement);
+nest_state: '\t'+ (statement | comp_statement) NEWLINE_TAB*;
 
 // For Statement
 for_statement: 'for' ID 'in' ID ':' (statement+);
