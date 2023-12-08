@@ -38,13 +38,14 @@ comp_statement: if_statement
 // If-Elif-Else Statements
 if_statement: 'if' condition ':' nest_state+ ('elif' condition ':'  nest_state+)* ('else' ':' nest_state+)*;
 
-nest_state: '\t'+ (statement | comp_statement) NEWLINE_TAB*;
-
 // For Statement
-for_statement: 'for' ID 'in' ID ':' (statement+);
+for_statement: 'for' ID 'in' (ID | ('range(' NUMBER ',' NUMBER ')')) ':' nest_state+;
 
 // While Statement
-while_statement: 'while' condition ':' (nest_state+);
+while_statement: 'while' condition ':' nest_state+;
+
+// Look for statements after compound statements
+nest_state: '\t' (statement | comp_statement) NEWLINE_TAB*;
 
 // Condition
 condition: condition_expr (('and'|'or') condition_expr)?;
@@ -52,7 +53,9 @@ condition: condition_expr (('and'|'or') condition_expr)?;
 condition_expr: ('(')? 'not' ID (')')?
                 | ID comp_op ID
                 | ID comp_op NUMBER
-                ;
+                | ('(')? ID comp_op NUMBER (')')?
+                | ('(')? ID comp_op ID (')')?
+                | BOOL;
 
 comp_op: '==' | '!=' | '<' | '<=' | '>' | '>=';
 
