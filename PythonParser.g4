@@ -1,10 +1,6 @@
 grammar PythonParser;
 
 // Lexer Rules
-tokens {
-   INDENT, DEDENT
-}
-
 // General Tokens
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
 NUMBER: INT | FLOAT;
@@ -23,18 +19,32 @@ MULTI_LINE_COMMENT: '\'\'\'' .*? '\'\'\'' -> skip;
 // Whitespace, tabs, newlines
 WS: [ \t]+ -> skip;
 NEWLINE: '\r'? '\n' -> skip;
+//NEWLINE_TAB: '\t'* NEWLINE -> skip;
 
 // Start of Parser
-start: statement+ if_statement+ statement+ EOF;
+start: (statement | comp_statement)* EOF;
 
-// Look for different statements
+// Look for Single Line Statements
 statement: assign_statement
    | arith_statement
-   | array_statement
-   | if_statement;
+   | array_statement;
 
+// Look for Compound Statements
+comp_statement: if_statement
+   | for_statement
+   | while_statement;
+
+// Compound Statements
 // If-Elif-Else Statements
-if_statement: 'if' condition ':'  (statement+) ('elif' condition ':' (statement)+)* ('else' ':' (statement)+)?;
+if_statement: 'if' condition ':' nest_state+ ('elif' condition ':'  nest_state+)* ('else' ':' nest_state+)*;
+
+nest_state: '\t'+ (statement | comp_statement);
+
+// For Statement
+for_statement: 'for' ID 'in' ID ':' (statement+);
+
+// While Statement
+while_statement: 'while' condition ':' (nest_state+);
 
 // Condition
 condition: condition_expr (('and'|'or') condition_expr)?;
@@ -46,6 +56,7 @@ condition_expr: ('(')? 'not' ID (')')?
 
 comp_op: '==' | '!=' | '<' | '<=' | '>' | '>=';
 
+// Single Line Statements
 //= += -= *= /=
 assign_statement: ID assign_op expr;
 
