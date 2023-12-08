@@ -13,6 +13,13 @@ FLOAT: '-'?[0-9]+'.'[0-9]+;
 STRING: '"' .*? '"' | '\'' .*? '\'';
 BOOL: 'True' | 'False';
 
+// Skip single-line comments
+COMMENT: '#' ~[\r\n]* -> skip;
+ALTCOMMENT: '##' ~[\r\n]* -> skip;
+
+// Skip multi-line comments
+//MULTI_LINE_COMMENT: '\'\'\' .*? \'\'\' -> skip;
+
 // Whitespace, tabs, newlines
 WS: [ \t]+ -> skip;
 NEWLINE: '\r'? '\n' -> skip;
