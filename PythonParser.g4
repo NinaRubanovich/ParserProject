@@ -18,7 +18,7 @@ COMMENT: '#' ~[\r\n]* -> skip;
 ALTCOMMENT: '##' ~[\r\n]* -> skip;
 
 // Skip multi-line comments
-//MULTI_LINE_COMMENT: '\'\'\' .*? \'\'\' -> skip;
+MULTI_LINE_COMMENT: '\'\'\'' .*? '\'\'\'' -> skip;
 
 // Whitespace, tabs, newlines
 WS: [ \t]+ -> skip;
