@@ -36,10 +36,10 @@ comp_statement: if_statement
 
 // Compound Statements
 // If-Elif-Else Statements
-if_statement: 'if' condition ':' nest_state+ ('elif' condition ':'  nest_state+)* ('else' ':' nest_state+)*;
+if_statement: '\t'* 'if' condition ':' nest_state+ ('elif' condition ':'  nest_state+)* ('else' ':' nest_state+)*;
 
 // For Statement
-for_statement: '\t'* 'for' ID 'in' (ID | ('range(' NUMBER ',' NUMBER ')')) ':' nest_state+;
+for_statement: '\t'* 'for' ID 'in' ID ':' '\t'* (statement+);
 
 // While Statement
 while_statement: 'while' condition ':' nest_state+;
