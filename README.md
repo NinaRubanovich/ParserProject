@@ -41,6 +41,8 @@ Activate your virtual environment by running "source /venv/bin/activate"
 
 Install ANTLR by running "pip install antlr4-tools" and "pip install antlr4-python3-runtime"
 
+Generate necessary Lexer files by running "antlr4 -Dlanguage=Python3 PythonParser.g4". We did not include these generated files in our github because they may be be some parts that are platform dependent.
+
 Run the driver.py file to test your Python file by running "python driver.py <name of your .py file to parse>" OR "python3 driver.py <name of your .py file to parse>" depending on your Python version
 
 Observe the Parse trees that are created by ANTLR for your Python expressions
